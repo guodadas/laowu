@@ -639,13 +639,6 @@
                 <!-- 动态生成 -->
               </tbody>
             </table>
-            <div class="empty-state" id="income-empty" style="display: none;">
-              <svg width="48" height="48" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
-              </svg>
-              <p>暂无收入记录</p>
-              <button class="btn btn-secondary" onclick="showIncomeModal()">添加第一条记录</button>
-            </div>
           </div>
         </div>
       </div>
@@ -2741,7 +2734,6 @@
     function loadIncome() {
       const incomeList = loadData(STORAGE_KEYS.INCOME) || [];
       const tbody = document.getElementById('income-table-body');
-      const emptyState = document.getElementById('income-empty');
       const searchValue = (document.getElementById('income-search')?.value || '').toLowerCase();
 
       // 过滤数据
@@ -2760,7 +2752,6 @@
 
       if (filteredIncome.length === 0) {
         tbody.innerHTML = '';
-        emptyState.style.display = 'flex';
         return;
       }
 
