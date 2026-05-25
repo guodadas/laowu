@@ -1,0 +1,2889 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>项目全流程管理平台</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 头部 -->
+    <header class="app-header">
+      <h1>项目全流程管理平台</h1>
+      <p>集成合同管理、费用项管理、分包商管理、结算管理与项目管理</p>
+    </header>
+
+    <!-- Tab导航 -->
+    <nav class="tab-navigation">
+      <button class="tab-btn" data-tab="stats">统计概述</button>
+      <button class="tab-btn active" data-tab="benefits">项目管理</button>
+      <button class="tab-btn" data-tab="expenses">费用项管理</button>
+      <button class="tab-btn" data-tab="subcontractors">分包商管理</button>
+      <button class="tab-btn" data-tab="contracts">合同信息</button>
+      <button class="tab-btn" data-tab="settlements">结算管理</button>
+      <button class="tab-btn" data-tab="income">收入管理</button>
+    </nav>
+
+    <!-- 模块0：统计概述 -->
+    <section id="stats" class="module-container">
+      <h2 class="page-title">
+        <svg width="28" height="28" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+        </svg>
+        项目统计概述
+        <button class="btn btn-primary" onclick="showSubmitDataModal()" style="margin-left: auto;">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"/>
+          </svg>
+          提交数据
+        </button>
+      </h2>
+
+      <!-- 效益指标 -->
+      <div class="stats-section">
+        <h3 class="section-title">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z" clip-rule="evenodd"/>
+          </svg>
+          效益指标
+        </h3>
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-icon blue">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">预计整体收益率</span>
+              <span class="stats-value" id="stats-overall-rate">0.00%</span>
+            </div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-icon green">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">预计利润率</span>
+              <span class="stats-value" id="stats-margin-rate">0.00%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 结算与成本 -->
+      <div class="stats-section">
+        <h3 class="section-title">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+            <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+          </svg>
+          结算与成本
+        </h3>
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-icon purple">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm1 10a1 1 0 100 2h4a1 1 0 100-2H7z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">结算单数量</span>
+              <span class="stats-value" id="stats-settlement-count">0</span>
+            </div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-icon orange">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">预估最终结算含税金额（万元）</span>
+              <span class="stats-value" id="stats-final-tax-amount">¥0.00</span>
+            </div>
+          </div>
+          <div class="stats-card highlight">
+            <div class="stats-icon red">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">当前已发生成本（万元）</span>
+              <span class="stats-value" id="stats-current-cost">¥0.00</span>
+            </div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-icon teal">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">实付金额（万元）（累计）</span>
+              <span class="stats-value" id="stats-paid-amount">¥0.00</span>
+            </div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-icon orange">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">欠款金额（万元）</span>
+              <span class="stats-value" id="stats-owed-amount">¥0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 收入与产值 -->
+      <div class="stats-section">
+        <h3 class="section-title">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd"/>
+          </svg>
+          收入与产值
+        </h3>
+        <div class="stats-grid">
+          <div class="stats-card highlight">
+            <div class="stats-icon gradient-primary">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+                <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div class="stats-content">
+              <span class="stats-label">项目总收入（万元）</span>
+              <span class="stats-value primary" id="stats-total-income">¥0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块1：项目管理 -->
+    <section id="benefits" class="module-container active">
+      <div class="benefit-summary">
+        <h3>
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+          </svg>
+          项目管理概览
+        </h3>
+        <div class="benefit-grid">
+          <div class="benefit-item">
+            <div class="label">预计整体收益</div>
+            <div class="value" id="total-profit">¥0.00</div>
+          </div>
+          <div class="benefit-item">
+            <div class="label">预计利润</div>
+            <div class="value" id="expected-profit">¥0.00</div>
+          </div>
+          <div class="benefit-item">
+            <div class="label">预计整体收益率</div>
+            <div class="value" id="profit-rate">0.00%</div>
+          </div>
+          <div class="benefit-item">
+            <div class="label">预计利润率</div>
+            <div class="value" id="margin-rate">0.00%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+            </svg>
+            项目基础信息
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>预计总收入（万元）</label>
+              <input type="number" id="total-revenue-tax" step="0.01" placeholder="请输入预计总收入（含税）" oninput="calculateBenefits()">
+            </div>
+            <div class="form-group">
+              <label>预计总收入（不含税，万元）</label>
+              <input type="number" id="total-revenue-no-tax" step="0.01" placeholder="请输入预计总收入（不含税）" oninput="calculateBenefits()">
+            </div>
+            <div class="form-group">
+              <label>自施部分收入（不含税，万元）</label>
+              <input type="number" id="self-revenue-no-tax" step="0.01" placeholder="请输入自施部分收入" oninput="calculateBenefits()">
+            </div>
+            <div class="form-group">
+              <label>预计总成本（万元）</label>
+              <input type="number" id="total-cost-tax" step="0.01" placeholder="请输入预计总成本（含税）" oninput="calculateBenefits()">
+            </div>
+            <div class="form-group">
+              <label>预计总成本（不含税，万元）</label>
+              <input type="number" id="total-cost-no-tax" step="0.01" placeholder="请输入预计总成本（不含税）" oninput="calculateBenefits()">
+            </div>
+            <div class="form-group">
+              <label>自施部分成本（不含税，万元）</label>
+              <input type="number" id="self-cost-no-tax" step="0.01" placeholder="请输入自施部分成本" oninput="calculateBenefits()">
+            </div>
+            <div class="form-group">
+              <label>管理费（万元）</label>
+              <input type="number" id="management-fee" step="0.01" placeholder="请输入管理费" oninput="calculateBenefits()">
+            </div>
+          </div>
+
+          <h4 class="section-title">自动计算结果</h4>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>预计整体收益（万元）</label>
+              <div class="readonly-field readonly-highlight" id="calc-total-profit">¥0.00</div>
+            </div>
+            <div class="form-group">
+              <label>预计利润（万元）</label>
+              <div class="readonly-field" id="calc-expected-profit">¥0.00</div>
+            </div>
+            <div class="form-group">
+              <label>预计整体收益率（%）</label>
+              <div class="readonly-field" id="calc-profit-rate">0.00%</div>
+            </div>
+            <div class="form-group">
+              <label>预计利润率（%）</label>
+              <div class="readonly-field" id="calc-margin-rate">0.00%</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; text-align: right;">
+            <button class="btn btn-primary" onclick="saveBenefits()">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+              </svg>
+              保存数据
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 项目数据汇总 -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">费用项数量</div>
+          <div class="stat-value" id="expense-count">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">分包商数量</div>
+          <div class="stat-value" id="subcontractor-count">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">合同数量</div>
+          <div class="stat-value" id="contract-count">0</div>
+        </div>
+        <div class="stat-card" style="display: none;">
+          <div class="stat-label">结算单数量</div>
+          <div class="stat-value" id="settlement-count">0</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块2：费用项管理 -->
+    <section id="expenses" class="module-container">
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+            </svg>
+            费用项列表
+          </h2>
+          <button class="btn btn-primary" onclick="openExpenseModal()">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+            </svg>
+            新增费用项
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="expense-search" placeholder="搜索费用项名称..." oninput="filterExpenses()">
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>费用名称</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="expense-table">
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="expense-empty" style="display: none;">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+            </svg>
+            <p>暂无费用项，请点击上方按钮添加</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块3：分包商管理 -->
+    <section id="subcontractors" class="module-container">
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+            </svg>
+            分包商列表
+          </h2>
+          <button class="btn btn-primary" onclick="openSubcontractorModal()">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+            </svg>
+            新增分包商
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="subcontractor-search" placeholder="搜索分包商名称..." oninput="filterSubcontractors()">
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>分包商名称</th>
+                  <th>合作时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="subcontractor-table">
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="subcontractor-empty" style="display: none;">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+            </svg>
+            <p>暂无分包商，请点击上方按钮添加</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块4：合同信息 -->
+    <section id="contracts" class="module-container">
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+            </svg>
+            合同列表
+          </h2>
+          <button class="btn btn-primary" onclick="openContractModal()">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+            </svg>
+            新增合同
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="contract-search" placeholder="搜索合同编号..." oninput="filterContracts()">
+            </div>
+            <div class="quick-actions">
+              <button class="btn btn-secondary btn-sm" onclick="filterByStatus('all')">全部</button>
+              <button class="btn btn-secondary btn-sm" onclick="filterByStatus('未开始')">未开始</button>
+              <button class="btn btn-secondary btn-sm" onclick="filterByStatus('进行中')">进行中</button>
+              <button class="btn btn-secondary btn-sm" onclick="filterByStatus('已完成')">已完成</button>
+            </div>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>合同编号</th>
+                  <th>费用名称</th>
+                  <th>分包商</th>
+                  <th>合同金额</th>
+                  <th>合同状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="contract-table">
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state" id="contract-empty" style="display: none;">
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+            </svg>
+            <p>暂无合同，请点击上方按钮添加</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块5：结算管理 -->
+    <section id="settlements" class="module-container">
+      <!-- 结算类型切换 -->
+      <div class="settlement-type-toggle">
+        <button class="toggle-btn active" data-type="contract" onclick="switchSettlementType('contract')">
+          <div>合同结算</div>
+          <small>对合同进行结算</small>
+        </button>
+        <button class="toggle-btn" data-type="expense" onclick="switchSettlementType('expense')">
+          <div>费用项结算</div>
+          <small>对费用项进行结算</small>
+        </button>
+      </div>
+
+      <!-- 合同结算区域 -->
+      <div id="contract-settlement" class="settlement-panel">
+        <div class="settlement-stats">
+          <div class="stat-item">
+            <span>结算单数量：</span>
+            <span class="stat-number" id="contract-settlement-count">0</span>
+          </div>
+          <div class="stat-item">
+            <span>总已结算金额：</span>
+            <span class="stat-number" id="contract-total-settled">¥0.00</span>
+          </div>
+          <div class="stat-item">
+            <span>总未入账成本：</span>
+            <span class="stat-number" id="contract-total-ungenerated">¥0.00</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+              </svg>
+              合同结算单
+            </h2>
+            <button class="btn btn-primary" onclick="openContractSettlementModal()">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+              </svg>
+              新增结算单
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:50px;">序号</th>
+                    <th style="max-width:140px;">合同编号</th>
+                    <th style="max-width:100px;">分包商</th>
+                    <th>自开累已结算金额</th>
+                    <th style="display:none;">未入账成本</th>
+                    <th>当前已发生成本</th>
+                    <th>实付金额（包含预付款）</th>
+                    <th style="width:80px;">完成比例</th>
+                    <th style="width:80px;">支付状态</th>
+                    <th style="width:220px;">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="contract-settlement-table">
+                </tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="contract-settlement-empty" style="display: none;">
+              <svg fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+              </svg>
+              <p>暂无合同结算单，请点击上方按钮添加</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 费用项结算区域 -->
+      <div id="expense-settlement" class="settlement-panel" style="display: none;">
+        <div class="settlement-stats" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+          <div class="stat-item">
+            <span>结算单数量：</span>
+            <span class="stat-number" id="expense-settlement-count">0</span>
+          </div>
+          <div class="stat-item">
+            <span>总自开累已结算金额：</span>
+            <span class="stat-number" id="expense-total-settled">¥0.00</span>
+          </div>
+          <div class="stat-item">
+            <span>总未入账成本：</span>
+            <span class="stat-number" id="expense-total-ungenerated">¥0.00</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+              </svg>
+              费用项结算单
+            </h2>
+            <button class="btn btn-primary" onclick="openExpenseSettlementModal()">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+              </svg>
+              新增结算单
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>序号</th>
+                    <th>费用名称</th>
+                    <th>自开累已结算金额</th>
+                    <th style="display:none;">未入账成本</th>
+                    <th>当前已发生成本</th>
+                    <th>实付金额（包含预付款）</th>
+                    <th>支付状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="expense-settlement-table">
+                </tbody>
+              </table>
+            </div>
+            <div class="empty-state" id="expense-settlement-empty" style="display: none;">
+              <svg fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+              </svg>
+              <p>暂无费用项结算单，请点击上方按钮添加</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模块6：收入管理 -->
+    <section id="income" class="module-container">
+      <!-- 统计卡片 -->
+      <div class="income-summary">
+        <div class="summary-card">
+          <div class="stat-icon income-icon">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
+              <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">累计合同约定实付金额</span>
+            <span class="stat-value" id="income-total-amount">¥ 0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd"/>
+            </svg>
+            收入列表
+          </h3>
+          <button class="btn btn-primary" onclick="showIncomeModal()">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/>
+            </svg>
+            新增收入
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="toolbar">
+            <div class="search-box">
+              <input type="text" id="income-search" placeholder="搜索收入记录..." oninput="filterIncome()">
+            </div>
+          </div>
+          <!-- 收入列表 -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>产值周期</th>
+                  <th>文件编号</th>
+                  <th>实际完成产值</th>
+                  <th>甲方确认产值</th>
+                  <th>合同约定应付金额</th>
+                  <th>扣款</th>
+                  <th>合同约定实付金额</th>
+                  <th>备注</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="income-table-body">
+                <!-- 动态生成 -->
+              </tbody>
+            </table>
+            <div class="empty-state" id="income-empty" style="display: none;">
+              <svg width="48" height="48" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+              </svg>
+              <p>暂无收入记录</p>
+              <button class="btn btn-secondary" onclick="showIncomeModal()">添加第一条记录</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 费用项模态框 -->
+  <div class="modal-overlay" id="expense-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="expense-modal-title">新增费用项</h3>
+        <button class="modal-close" onclick="closeModal('expense-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="expense-id">
+        <div class="form-group">
+          <label>费用名称 *</label>
+          <input type="text" id="expense-name" placeholder="请输入费用名称">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('expense-modal')">取消</button>
+        <button class="btn btn-primary" onclick="saveExpense()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 收入模态框 -->
+  <div class="modal-overlay" id="income-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="income-modal-title">新增收入</h3>
+        <button class="modal-close" onclick="closeModal('income-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="income-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>产值周期 *</label>
+            <input type="text" id="income-production-cycle" placeholder="请输入产值周期，如：2024-01">
+          </div>
+          <div class="form-group">
+            <label>文件编号</label>
+            <input type="text" id="income-file-number" placeholder="请输入文件编号">
+          </div>
+          <div class="form-group">
+            <label>实际完成产值</label>
+            <input type="number" id="income-actual-output" placeholder="请输入实际完成产值" step="0.01" min="0" oninput="calculateIncomeAmounts()">
+          </div>
+          <div class="form-group">
+            <label>甲方确认产值</label>
+            <input type="number" id="income-party-confirmed" placeholder="请输入甲方确认产值" step="0.01" min="0" oninput="calculateIncomeAmounts()">
+          </div>
+          <div class="form-group">
+            <label>合同约定应付金额</label>
+            <input type="number" id="income-contract-payable" placeholder="请输入合同约定应付金额" step="0.01" min="0" oninput="calculateIncomeAmounts()">
+          </div>
+          <div class="form-group">
+            <label>扣款</label>
+            <input type="number" id="income-deduction" placeholder="请输入扣款金额" step="0.01" min="0" value="0" oninput="calculateIncomeAmounts()">
+          </div>
+          <div class="form-group">
+            <label>合同约定实付金额</label>
+            <input type="number" id="income-actual-payable" placeholder="自动计算" step="0.01" min="0" readonly>
+          </div>
+          <div class="form-group full-width">
+            <label>备注</label>
+            <textarea id="income-remarks" placeholder="请输入备注信息" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('income-modal')">取消</button>
+        <button class="btn btn-primary" onclick="saveIncome()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分包商模态框 -->
+  <div class="modal-overlay" id="subcontractor-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="subcontractor-modal-title">新增分包商</h3>
+        <button class="modal-close" onclick="closeModal('subcontractor-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="subcontractor-id">
+        <div class="form-group">
+          <label>分包商名称 *</label>
+          <input type="text" id="subcontractor-name" placeholder="请输入分包商名称">
+        </div>
+        <div class="form-group" style="margin-top: 16px;">
+          <label>合作时间</label>
+          <input type="date" id="subcontractor-date">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('subcontractor-modal')">取消</button>
+        <button class="btn btn-primary" onclick="saveSubcontractor()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 合同模态框 -->
+  <div class="modal-overlay" id="contract-modal">
+    <div class="modal" style="max-width: 800px;">
+      <div class="modal-header">
+        <h3 id="contract-modal-title">新增合同</h3>
+        <button class="modal-close" onclick="closeModal('contract-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="contract-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>费用名称 *</label>
+            <select id="contract-expense-name">
+              <option value="">请选择费用名称</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>分包商名称 *</label>
+            <select id="contract-subcontractor-name">
+              <option value="">请选择分包商</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>合同编号 *</label>
+            <input type="text" id="contract-code" placeholder="请输入合同编号">
+          </div>
+          <div class="form-group">
+            <label>合同签订时间</label>
+            <input type="date" id="contract-sign-date">
+          </div>
+          <div class="form-group">
+            <label>保留金比例（%）</label>
+            <input type="number" id="contract-retain-ratio" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>执行中付款比例（%）</label>
+            <input type="number" id="contract-executing-ratio" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>完工待结算付款比例（%）</label>
+            <input type="number" id="contract-waiting-ratio" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>结算完成付款比例（%）</label>
+            <input type="number" id="contract-completed-ratio" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>合同税率（%）</label>
+            <input type="number" id="contract-tax-rate" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>原合同金额（万元）</label>
+            <input type="number" id="contract-original-amount" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>补充协议金额（万元）</label>
+            <input type="number" id="contract-supplement-amount" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>预付款金额（万元）</label>
+            <input type="number" id="contract-advance-amount" step="0.01" value="0" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>合同状态</label>
+            <select id="contract-status">
+              <option value="未开始">未开始</option>
+              <option value="进行中" selected>进行中</option>
+              <option value="已完成">已完成</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label>说明</label>
+            <textarea id="contract-remark" rows="3" placeholder="请输入合同说明"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('contract-modal')">取消</button>
+        <button class="btn btn-primary" onclick="saveContract()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 合同结算模态框 -->
+  <div class="modal-overlay" id="contract-settlement-modal">
+    <div class="modal" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3 id="contract-settlement-modal-title">新增合同结算单</h3>
+        <button class="modal-close" onclick="closeModal('contract-settlement-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="contract-settlement-id">
+        
+        <!-- 合同选择 -->
+        <div class="form-group">
+          <label>选择合同 *</label>
+          <select id="settlement-contract-select" onchange="loadContractInfo()">
+            <option value="">请选择合同</option>
+          </select>
+        </div>
+
+        <!-- 关联合同信息 -->
+        <div class="linked-info" id="linked-contract-info" style="display: none;">
+          <h4 style="margin-bottom: 12px; color: var(--gray-700);">合同信息</h4>
+          <div class="info-row">
+            <div class="info-item">
+              <span class="info-label">费用名称</span>
+              <span class="info-value" id="info-expense-name">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">分包商名称</span>
+              <span class="info-value" id="info-subcontractor-name">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">合同编号</span>
+              <span class="info-value" id="info-contract-code">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">合同签订时间</span>
+              <span class="info-value" id="info-sign-date">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">保留金比例</span>
+              <span class="info-value" id="info-retain-ratio">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">合同税率</span>
+              <span class="info-value" id="info-tax-rate">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">原合同金额</span>
+              <span class="info-value" id="info-original-amount">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">补充协议金额</span>
+              <span class="info-value" id="info-supplement-amount">-</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">预付款</span>
+              <span class="info-value" id="info-advance-amount">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 自动计算字段 -->
+        <div class="linked-info" id="calculated-info" style="display: none; background: #fef3c7;">
+          <h4 style="margin-bottom: 12px; color: #92400e;">自动计算结果</h4>
+          <div class="info-row">
+            <div class="info-item">
+              <span class="info-label">合计金额</span>
+              <span class="info-value" id="calc-total-amount">¥0.00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">预估最终结算含税金额</span>
+              <span class="info-value" id="calc-final-tax-amount">¥0.00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">预估最终结算不含税金额</span>
+              <span class="info-value" id="calc-final-no-tax-amount">¥0.00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">税金</span>
+              <span class="info-value" id="calc-tax-amount">¥0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 结算信息录入 -->
+        <div class="form-grid" style="margin-top: 20px;">
+          <div class="form-group">
+            <label>自开累已结算金额（万元）</label>
+            <input type="number" id="settlement-paid-amount" step="0.01" value="0" placeholder="0" oninput="calculateSettlement()">
+          </div>
+          <div class="form-group">
+            <label>未入账成本（本次结算金额）（万元）</label>
+            <input type="number" id="settlement-ungenerated-cost" step="0.01" value="0" placeholder="0" oninput="calculateSettlement()">
+          </div>
+        </div>
+
+        <!-- 结算维度计算 -->
+        <div class="linked-info" id="settlement-calculated-info" style="display: none; background: #dbeafe;">
+          <h4 style="margin-bottom: 12px; color: #1e40af;">结算维度计算</h4>
+          <div class="info-row">
+            <div class="info-item">
+              <span class="info-label">当前已发生成本</span>
+              <span class="info-value" id="calc-current-cost">¥0.00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">当前已发生成本不含税金额</span>
+              <span class="info-value" id="calc-current-cost-no-tax">¥0.00</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">结算信息完成比例</span>
+              <span class="info-value" id="calc-completion-ratio">0.00%</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">除税金额</span>
+              <input type="number" id="settlement-excluding-tax-amount" step="0.01" value="0" placeholder="请输入除税金额">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 16px;">
+          <label>结算说明</label>
+          <textarea id="settlement-remark" rows="3" placeholder="请输入结算说明"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('contract-settlement-modal')">取消</button>
+        <button class="btn btn-primary" onclick="saveContractSettlement()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 费用项结算模态框 -->
+  <div class="modal-overlay" id="expense-settlement-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="expense-settlement-modal-title">新增费用项结算单</h3>
+        <button class="modal-close" onclick="closeModal('expense-settlement-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="expense-settlement-id">
+        <div class="form-group">
+          <label>费用名称 *</label>
+          <select id="settlement-expense-select">
+            <option value="">请选择费用名称</option>
+          </select>
+        </div>
+        <div class="form-grid" style="margin-top: 16px;">
+          <div class="form-group">
+            <label>自开累已结算金额（万元）</label>
+            <input type="number" id="expense-settlement-paid-amount" step="0.01" value="0" placeholder="0" oninput="calculateExpenseSettlement()">
+          </div>
+          <div class="form-group">
+            <label>未入账成本（本次结算金额）（万元）</label>
+            <input type="number" id="expense-settlement-ungenerated-cost" step="0.01" value="0" placeholder="0" oninput="calculateExpenseSettlement()">
+          </div>
+        </div>
+        <!-- 自动计算：当前已发生成本 -->
+        <div class="linked-info" id="expense-settlement-calculated-info" style="display: none; background: #dbeafe; margin-top: 16px;">
+          <h4 style="margin-bottom: 12px; color: #1e40af;">结算维度计算</h4>
+          <div class="info-row">
+            <div class="info-item">
+              <span class="info-label">当前已发生成本</span>
+              <span class="info-value" id="expense-calc-current-cost">¥0.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 16px;">
+          <label>结算说明</label>
+          <textarea id="expense-settlement-remark" rows="3" placeholder="请输入结算说明"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('expense-settlement-modal')">取消</button>
+        <button class="btn btn-primary" onclick="saveExpenseSettlement()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提交数据模态框 -->
+  <div class="modal-overlay" id="submit-data-modal">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3>提交数据</h3>
+        <button class="modal-close" onclick="closeModal('submit-data-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- 用户信息 -->
+        <div class="submit-user-info">
+          <div class="info-item">
+            <span class="info-label">用户名</span>
+            <input type="text" id="submit-username" placeholder="请输入用户名" value="">
+          </div>
+          <div class="info-item">
+            <span class="info-label">当前时间</span>
+            <span class="info-value" id="submit-current-time">-</span>
+          </div>
+        </div>
+
+        <!-- 接口配置 -->
+        <div class="form-group" style="margin-top: 20px;">
+          <label>接口地址 *</label>
+          <input type="text" id="submit-api-url" placeholder="请输入接口地址，如：https://xxx.com/api/submit">
+        </div>
+        <div class="form-group">
+          <label>任务ID *</label>
+          <input type="text" id="submit-task-id" placeholder="请输入任务ID，如：TASK-1-001">
+        </div>
+
+        <!-- 字段选择 -->
+        <div class="form-group" style="margin-top: 20px;">
+          <label>选择提交字段（可多选）</label>
+          <div class="field-select-container" id="field-select-container">
+            <!-- 动态生成 -->
+          </div>
+        </div>
+
+        <!-- 已选字段预览 -->
+        <div class="form-group" style="margin-top: 20px;">
+          <label>已选字段预览</label>
+          <div class="selected-fields-preview" id="selected-fields-preview">
+            <div class="empty-hint">请勾选要提交的字段</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('submit-data-modal')">取消</button>
+        <button class="btn btn-primary" onclick="submitData()">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z"/>
+          </svg>
+          确认提交
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 支付模态框 -->
+  <div class="modal-overlay" id="payment-modal">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h3>支付信息</h3>
+        <button class="modal-close" onclick="closeModal('payment-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="payment-settlement-id">
+        <input type="hidden" id="payment-settlement-type">
+        <div class="form-group">
+          <label>实付金额（含预付款）（万元）</label>
+          <input type="number" id="payment-actual-amount" step="0.01" value="0" placeholder="请输入实付金额">
+        </div>
+        <div class="payment-info" style="margin-top: 16px;">
+          <div class="payment-row">
+            <span>按合同应付金额（含预付款）</span>
+            <span id="payment-payable-amount">¥0.00</span>
+          </div>
+          <div class="payment-row">
+            <span>实付金额（含预付款）</span>
+            <span id="payment-actual-display">¥0.00</span>
+          </div>
+          <div class="payment-row total">
+            <span>欠付金额</span>
+            <span id="payment-owed-amount">¥0.00</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('payment-modal')">取消</button>
+        <button class="btn btn-success" onclick="savePayment()">确认支付</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 合同结算详情查看模态框 -->
+  <div class="modal-overlay" id="contract-settlement-view-modal">
+    <div class="modal" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3>合同结算详情</h3>
+        <button class="modal-close" onclick="closeModal('contract-settlement-view-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="contract-settlement-view-content">
+        <!-- 动态填充内容 -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('contract-settlement-view-modal')">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 费用项结算详情查看模态框 -->
+  <div class="modal-overlay" id="expense-settlement-view-modal">
+    <div class="modal" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3>费用项结算详情</h3>
+        <button class="modal-close" onclick="closeModal('expense-settlement-view-modal')">&times;</button>
+      </div>
+      <div class="modal-body" id="expense-settlement-view-content">
+        <!-- 动态填充内容 -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('expense-settlement-view-modal')">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast提示 -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ==================== 数据存储 ====================
+    const STORAGE_KEYS = {
+      BENEFITS: 'project_benefits',
+      EXPENSES: 'project_expenses',
+      SUBCONTRACTORS: 'project_subcontractors',
+      CONTRACTS: 'project_contracts',
+      CONTRACT_SETTLEMENTS: 'project_contract_settlements',
+      EXPENSE_SETTLEMENTS: 'project_expense_settlements',
+      INCOME: 'project_income'
+    };
+
+    // 通用存储方法
+    function saveData(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    function loadData(key) {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+    }
+
+    // ==================== 工具函数 ====================
+    function generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    function formatCurrency(amount) {
+      return '¥' + parseFloat(amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('zh-CN');
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    function getStatusClass(status) {
+      const statusMap = {
+        '未开始': 'not-started',
+        '进行中': 'in-progress',
+        '已完成': 'completed'
+      };
+      return statusMap[status] || 'pending';
+    }
+
+    // ==================== Tab切换 ====================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.module-container').forEach(m => m.classList.remove('active'));
+        
+        this.classList.add('active');
+        const tabId = this.dataset.tab;
+        document.getElementById(tabId).classList.add('active');
+        
+        // 刷新对应模块数据
+        if (tabId === 'stats') {
+          updateStatsOverview();
+        } else if (tabId === 'benefits') {
+          loadBenefits();
+          updateStats();
+        } else if (tabId === 'expenses') {
+          loadExpenses();
+        } else if (tabId === 'subcontractors') {
+          loadSubcontractors();
+        } else if (tabId === 'contracts') {
+          loadContracts();
+        } else if (tabId === 'settlements') {
+          loadContractSettlements();
+          loadExpenseSettlements();
+        } else if (tabId === 'income') {
+          loadIncome();
+        }
+      });
+    });
+
+    // ==================== 模态框控制 ====================
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      // 清空表单
+      const modal = document.getElementById(modalId);
+      modal.querySelectorAll('input, select, textarea').forEach(el => {
+        if (el.type === 'hidden') return;
+        if (el.tagName === 'SELECT') {
+          el.selectedIndex = 0;
+        } else if (el.type === 'number') {
+          el.value = el.dataset.default || '0';
+        } else {
+          el.value = '';
+        }
+      });
+    }
+
+    // ==================== 模块1：项目管理 ====================
+    function calculateBenefits() {
+      const totalRevenueTax = parseFloat(document.getElementById('total-revenue-tax').value) || 0;
+      const totalRevenueNoTax = parseFloat(document.getElementById('total-revenue-no-tax').value) || 0;
+      const selfRevenueNoTax = parseFloat(document.getElementById('self-revenue-no-tax').value) || 0;
+      const totalCostTax = parseFloat(document.getElementById('total-cost-tax').value) || 0;
+      const totalCostNoTax = parseFloat(document.getElementById('total-cost-no-tax').value) || 0;
+      const selfCostNoTax = parseFloat(document.getElementById('self-cost-no-tax').value) || 0;
+      const managementFee = parseFloat(document.getElementById('management-fee').value) || 0;
+
+      // 自动计算字段
+      const totalProfit = totalRevenueNoTax - totalCostNoTax + managementFee;
+      const expectedProfit = totalRevenueNoTax - totalCostNoTax;
+      const profitRate = totalRevenueTax > 0 ? (totalProfit / totalRevenueTax) * 100 : 0;
+      // 预计利润率 = 预计利润 / 预计总收入（含税）
+      const marginRate = totalRevenueTax > 0 ? (expectedProfit / totalRevenueTax) * 100 : 0;
+
+      // 显示计算结果（所有金额保留2位小数）
+      document.getElementById('calc-total-profit').textContent = formatCurrency(totalProfit);
+      document.getElementById('calc-expected-profit').textContent = formatCurrency(expectedProfit);
+      document.getElementById('calc-profit-rate').textContent = profitRate.toFixed(2) + '%';
+      document.getElementById('calc-margin-rate').textContent = marginRate.toFixed(2) + '%';
+
+      // 更新顶部概览
+      document.getElementById('total-profit').textContent = formatCurrency(totalProfit);
+      document.getElementById('expected-profit').textContent = formatCurrency(expectedProfit);
+      document.getElementById('profit-rate').textContent = profitRate.toFixed(2) + '%';
+      document.getElementById('margin-rate').textContent = marginRate.toFixed(2) + '%';
+    }
+
+    function saveBenefits() {
+      const benefits = {
+        totalRevenueTax: parseFloat(document.getElementById('total-revenue-tax').value) || 0,
+        totalRevenueNoTax: parseFloat(document.getElementById('total-revenue-no-tax').value) || 0,
+        selfRevenueNoTax: parseFloat(document.getElementById('self-revenue-no-tax').value) || 0,
+        totalCostTax: parseFloat(document.getElementById('total-cost-tax').value) || 0,
+        totalCostNoTax: parseFloat(document.getElementById('total-cost-no-tax').value) || 0,
+        selfCostNoTax: parseFloat(document.getElementById('self-cost-no-tax').value) || 0,
+        managementFee: parseFloat(document.getElementById('management-fee').value) || 0,
+        updatedAt: new Date().toISOString()
+      };
+      saveData(STORAGE_KEYS.BENEFITS, benefits);
+      showToast('项目管理数据已保存');
+    }
+
+    function loadBenefits() {
+      const benefits = loadData(STORAGE_KEYS.BENEFITS);
+      if (benefits) {
+        document.getElementById('total-revenue-tax').value = benefits.totalRevenueTax || '';
+        document.getElementById('total-revenue-no-tax').value = benefits.totalRevenueNoTax || '';
+        document.getElementById('self-revenue-no-tax').value = benefits.selfRevenueNoTax || '';
+        document.getElementById('total-cost-tax').value = benefits.totalCostTax || '';
+        document.getElementById('total-cost-no-tax').value = benefits.totalCostNoTax || '';
+        document.getElementById('self-cost-no-tax').value = benefits.selfCostNoTax || '';
+        document.getElementById('management-fee').value = benefits.managementFee || '';
+        calculateBenefits();
+      }
+    }
+
+    function updateStats() {
+      const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+      const subcontractors = loadData(STORAGE_KEYS.SUBCONTRACTORS) || [];
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      const contractSettlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+      const expenseSettlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+
+      document.getElementById('expense-count').textContent = expenses.length;
+      document.getElementById('subcontractor-count').textContent = subcontractors.length;
+      document.getElementById('contract-count').textContent = contracts.length;
+      document.getElementById('settlement-count').textContent = contractSettlements.length + expenseSettlements.length;
+    }
+
+    // ==================== 模块2：费用项管理 ====================
+    function loadExpenses() {
+      const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+      const searchTerm = document.getElementById('expense-search')?.value?.toLowerCase() || '';
+      
+      const filtered = expenses.filter(e => 
+        e.name.toLowerCase().includes(searchTerm)
+      );
+
+      const tbody = document.getElementById('expense-table');
+      const emptyState = document.getElementById('expense-empty');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = filtered.map((expense, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${expense.name}</td>
+          <td>${formatDate(expense.createdAt)}</td>
+          <td class="table-actions">
+            <button class="btn btn-warning btn-sm" onclick="editExpense('${expense.id}')">编辑</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteExpense('${expense.id}')">删除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterExpenses() {
+      loadExpenses();
+    }
+
+    function openExpenseModal(id = null) {
+      const modal = document.getElementById('expense-modal');
+      const title = document.getElementById('expense-modal-title');
+      
+      if (id) {
+        title.textContent = '编辑费用项';
+        const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+        const expense = expenses.find(e => e.id === id);
+        if (expense) {
+          document.getElementById('expense-id').value = expense.id;
+          document.getElementById('expense-name').value = expense.name;
+        }
+      } else {
+        title.textContent = '新增费用项';
+        document.getElementById('expense-id').value = '';
+        document.getElementById('expense-name').value = '';
+      }
+      
+      openModal('expense-modal');
+    }
+
+    function editExpense(id) {
+      openExpenseModal(id);
+    }
+
+    function saveExpense() {
+      const name = document.getElementById('expense-name').value.trim();
+      const id = document.getElementById('expense-id').value;
+
+      if (!name) {
+        showToast('请输入费用名称', 'error');
+        return;
+      }
+
+      let expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+
+      if (id) {
+        const index = expenses.findIndex(e => e.id === id);
+        if (index !== -1) {
+          expenses[index].name = name;
+          expenses[index].updatedAt = new Date().toISOString();
+        }
+      } else {
+        expenses.push({
+          id: generateId(),
+          name: name,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      }
+
+      saveData(STORAGE_KEYS.EXPENSES, expenses);
+      closeModal('expense-modal');
+      loadExpenses();
+      updateStats();
+      updateSelectOptions();
+      showToast(id ? '费用项已更新' : '费用项已添加');
+    }
+
+    function deleteExpense(id) {
+      if (!confirm('确定要删除此费用项吗？')) return;
+      
+      let expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+      expenses = expenses.filter(e => e.id !== id);
+      saveData(STORAGE_KEYS.EXPENSES, expenses);
+      
+      loadExpenses();
+      updateStats();
+      updateSelectOptions();
+      showToast('费用项已删除');
+    }
+
+    // ==================== 模块3：分包商管理 ====================
+    function loadSubcontractors() {
+      const subcontractors = loadData(STORAGE_KEYS.SUBCONTRACTORS) || [];
+      const searchTerm = document.getElementById('subcontractor-search')?.value?.toLowerCase() || '';
+      
+      const filtered = subcontractors.filter(s => 
+        s.name.toLowerCase().includes(searchTerm)
+      );
+
+      const tbody = document.getElementById('subcontractor-table');
+      const emptyState = document.getElementById('subcontractor-empty');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = filtered.map((sub, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${sub.name}</td>
+          <td>${formatDate(sub.date)}</td>
+          <td class="table-actions">
+            <button class="btn btn-warning btn-sm" onclick="editSubcontractor('${sub.id}')">编辑</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteSubcontractor('${sub.id}')">删除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterSubcontractors() {
+      loadSubcontractors();
+    }
+
+    function openSubcontractorModal(id = null) {
+      const modal = document.getElementById('subcontractor-modal');
+      const title = document.getElementById('subcontractor-modal-title');
+      
+      if (id) {
+        title.textContent = '编辑分包商';
+        const subcontractors = loadData(STORAGE_KEYS.SUBCONTRACTORS) || [];
+        const sub = subcontractors.find(s => s.id === id);
+        if (sub) {
+          document.getElementById('subcontractor-id').value = sub.id;
+          document.getElementById('subcontractor-name').value = sub.name;
+          document.getElementById('subcontractor-date').value = sub.date || '';
+        }
+      } else {
+        title.textContent = '新增分包商';
+        document.getElementById('subcontractor-id').value = '';
+        document.getElementById('subcontractor-name').value = '';
+        document.getElementById('subcontractor-date').value = '';
+      }
+      
+      openModal('subcontractor-modal');
+    }
+
+    function editSubcontractor(id) {
+      openSubcontractorModal(id);
+    }
+
+    function saveSubcontractor() {
+      const name = document.getElementById('subcontractor-name').value.trim();
+      const date = document.getElementById('subcontractor-date').value;
+      const id = document.getElementById('subcontractor-id').value;
+
+      if (!name) {
+        showToast('请输入分包商名称', 'error');
+        return;
+      }
+
+      let subcontractors = loadData(STORAGE_KEYS.SUBCONTRACTORS) || [];
+
+      if (id) {
+        const index = subcontractors.findIndex(s => s.id === id);
+        if (index !== -1) {
+          subcontractors[index].name = name;
+          subcontractors[index].date = date;
+          subcontractors[index].updatedAt = new Date().toISOString();
+        }
+      } else {
+        subcontractors.push({
+          id: generateId(),
+          name: name,
+          date: date,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        });
+      }
+
+      saveData(STORAGE_KEYS.SUBCONTRACTORS, subcontractors);
+      closeModal('subcontractor-modal');
+      loadSubcontractors();
+      updateStats();
+      updateSelectOptions();
+      showToast(id ? '分包商已更新' : '分包商已添加');
+    }
+
+    function deleteSubcontractor(id) {
+      if (!confirm('确定要删除此分包商吗？')) return;
+      
+      let subcontractors = loadData(STORAGE_KEYS.SUBCONTRACTORS) || [];
+      subcontractors = subcontractors.filter(s => s.id !== id);
+      saveData(STORAGE_KEYS.SUBCONTRACTORS, subcontractors);
+      
+      loadSubcontractors();
+      updateStats();
+      updateSelectOptions();
+      showToast('分包商已删除');
+    }
+
+    // ==================== 模块4：合同信息 ====================
+    function loadContracts(statusFilter = 'all') {
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      const searchTerm = document.getElementById('contract-search')?.value?.toLowerCase() || '';
+      
+      let filtered = contracts.filter(c => 
+        c.code.toLowerCase().includes(searchTerm) ||
+        c.expenseName.toLowerCase().includes(searchTerm) ||
+        c.subcontractorName.toLowerCase().includes(searchTerm)
+      );
+
+      if (statusFilter !== 'all') {
+        filtered = filtered.filter(c => c.status === statusFilter);
+      }
+
+      const tbody = document.getElementById('contract-table');
+      const emptyState = document.getElementById('contract-empty');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = filtered.map((contract, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${contract.code}</td>
+          <td>${contract.expenseName || '-'}</td>
+          <td>${contract.subcontractorName || '-'}</td>
+          <td>${formatCurrency(contract.originalAmount + contract.supplementAmount)}</td>
+          <td><span class="status-tag ${getStatusClass(contract.status)}">${contract.status}</span></td>
+          <td class="table-actions">
+            <button class="btn btn-warning btn-sm" onclick="editContract('${contract.id}')">编辑</button>
+            <button class="btn btn-secondary btn-sm" onclick="changeContractStatus('${contract.id}')">状态</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteContract('${contract.id}')">删除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterContracts() {
+      loadContracts();
+    }
+
+    function filterByStatus(status) {
+      loadContracts(status);
+      document.querySelectorAll('#contracts .quick-actions .btn').forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+      });
+      event.target.classList.remove('btn-secondary');
+      event.target.classList.add('btn-primary');
+    }
+
+    function updateSelectOptions() {
+      const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+      const subcontractors = loadData(STORAGE_KEYS.SUBCONTRACTORS) || [];
+
+      // 更新合同模态框中的选择
+      const contractExpenseSelect = document.getElementById('contract-expense-name');
+      const contractSubSelect = document.getElementById('contract-subcontractor-name');
+      const settlementContractSelect = document.getElementById('settlement-contract-select');
+      const settlementExpenseSelect = document.getElementById('settlement-expense-select');
+
+      [contractExpenseSelect, settlementExpenseSelect].forEach(select => {
+        if (!select) return;
+        const currentValue = select.value;
+        select.innerHTML = '<option value="">请选择费用名称</option>';
+        expenses.forEach(e => {
+          select.innerHTML += `<option value="${e.id}">${e.name}</option>`;
+        });
+        select.value = currentValue;
+      });
+
+      [contractSubSelect].forEach(select => {
+        if (!select) return;
+        const currentValue = select.value;
+        select.innerHTML = '<option value="">请选择分包商</option>';
+        subcontractors.forEach(s => {
+          select.innerHTML += `<option value="${s.name}">${s.name}</option>`;
+        });
+        select.value = currentValue;
+      });
+
+      if (settlementContractSelect) {
+        const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+        const currentValue = settlementContractSelect.value;
+        settlementContractSelect.innerHTML = '<option value="">请选择合同</option>';
+        contracts.forEach(c => {
+          settlementContractSelect.innerHTML += `<option value="${c.id}">${c.code} - ${c.subcontractorName || ''}</option>`;
+        });
+        settlementContractSelect.value = currentValue;
+      }
+    }
+
+    function openContractModal(id = null) {
+      updateSelectOptions();
+      const modal = document.getElementById('contract-modal');
+      const title = document.getElementById('contract-modal-title');
+      
+      if (id) {
+        title.textContent = '编辑合同';
+        const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+        const contract = contracts.find(c => c.id === id);
+        const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+        if (contract) {
+          document.getElementById('contract-id').value = contract.id;
+          // 兼容：先通过 id 匹配，找不到则用 expenseName（可能是旧数据存的 name）查找对应的 expense
+          const matchedExpense = expenses.find(e => e.id === contract.expenseName) || expenses.find(e => e.name === contract.expenseName);
+          document.getElementById('contract-expense-name').value = matchedExpense ? matchedExpense.id : contract.expenseName;
+          document.getElementById('contract-subcontractor-name').value = contract.subcontractorName || '';
+          document.getElementById('contract-code').value = contract.code || '';
+          document.getElementById('contract-sign-date').value = contract.signDate || '';
+          document.getElementById('contract-retain-ratio').value = contract.retainRatio || 0;
+          document.getElementById('contract-executing-ratio').value = contract.executingRatio || 0;
+          document.getElementById('contract-waiting-ratio').value = contract.waitingRatio || 0;
+          document.getElementById('contract-completed-ratio').value = contract.completedRatio || 0;
+          document.getElementById('contract-tax-rate').value = contract.taxRate || 0;
+          document.getElementById('contract-original-amount').value = contract.originalAmount || 0;
+          document.getElementById('contract-supplement-amount').value = contract.supplementAmount || 0;
+          document.getElementById('contract-advance-amount').value = contract.advanceAmount || 0;
+          document.getElementById('contract-status').value = contract.status || '进行中';
+          document.getElementById('contract-remark').value = contract.remark || '';
+        }
+      } else {
+        title.textContent = '新增合同';
+        document.getElementById('contract-id').value = '';
+        document.getElementById('contract-expense-name').value = '';
+        document.getElementById('contract-subcontractor-name').value = '';
+        document.getElementById('contract-code').value = '';
+        document.getElementById('contract-sign-date').value = '';
+        document.getElementById('contract-retain-ratio').value = 0;
+        document.getElementById('contract-executing-ratio').value = 0;
+        document.getElementById('contract-waiting-ratio').value = 0;
+        document.getElementById('contract-completed-ratio').value = 0;
+        document.getElementById('contract-tax-rate').value = 0;
+        document.getElementById('contract-original-amount').value = 0;
+        document.getElementById('contract-supplement-amount').value = 0;
+        document.getElementById('contract-advance-amount').value = 0;
+        document.getElementById('contract-status').value = '进行中';
+        document.getElementById('contract-remark').value = '';
+      }
+      
+      openModal('contract-modal');
+    }
+
+    function editContract(id) {
+      openContractModal(id);
+    }
+
+    function changeContractStatus(id) {
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      const contract = contracts.find(c => c.id === id);
+      if (!contract) return;
+
+      const statuses = ['未开始', '进行中', '已完成'];
+      const currentIndex = statuses.indexOf(contract.status);
+      const nextStatus = statuses[(currentIndex + 1) % statuses.length];
+
+      contract.status = nextStatus;
+      saveData(STORAGE_KEYS.CONTRACTS, contracts);
+      loadContracts();
+      showToast(`合同状态已更新为：${nextStatus}`);
+    }
+
+    function saveContract() {
+      const id = document.getElementById('contract-id').value;
+      const contractData = {
+        expenseName: document.getElementById('contract-expense-name').value,
+        subcontractorName: document.getElementById('contract-subcontractor-name').value,
+        code: document.getElementById('contract-code').value.trim(),
+        signDate: document.getElementById('contract-sign-date').value,
+        retainRatio: parseFloat(document.getElementById('contract-retain-ratio').value) || 0,
+        executingRatio: parseFloat(document.getElementById('contract-executing-ratio').value) || 0,
+        waitingRatio: parseFloat(document.getElementById('contract-waiting-ratio').value) || 0,
+        completedRatio: parseFloat(document.getElementById('contract-completed-ratio').value) || 0,
+        taxRate: parseFloat(document.getElementById('contract-tax-rate').value) || 0,
+        originalAmount: parseFloat(document.getElementById('contract-original-amount').value) || 0,
+        supplementAmount: parseFloat(document.getElementById('contract-supplement-amount').value) || 0,
+        advanceAmount: parseFloat(document.getElementById('contract-advance-amount').value) || 0,
+        status: document.getElementById('contract-status').value,
+        remark: document.getElementById('contract-remark').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      if (!contractData.code) {
+        showToast('请输入合同编号', 'error');
+        return;
+      }
+
+      let contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+
+      if (id) {
+        const index = contracts.findIndex(c => c.id === id);
+        if (index !== -1) {
+          contracts[index] = { ...contracts[index], ...contractData };
+        }
+      } else {
+        contracts.push({
+          id: generateId(),
+          ...contractData,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      saveData(STORAGE_KEYS.CONTRACTS, contracts);
+      closeModal('contract-modal');
+      loadContracts();
+      updateStats();
+      showToast(id ? '合同已更新' : '合同已添加');
+    }
+
+    function deleteContract(id) {
+      if (!confirm('确定要删除此合同吗？')) return;
+      
+      let contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      contracts = contracts.filter(c => c.id !== id);
+      saveData(STORAGE_KEYS.CONTRACTS, contracts);
+      
+      loadContracts();
+      updateStats();
+      showToast('合同已删除');
+    }
+
+    // ==================== 模块5：结算管理 ====================
+    function switchSettlementType(type) {
+      document.querySelectorAll('.settlement-type-toggle .toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.type === type) {
+          btn.classList.add('active');
+        }
+      });
+
+      document.getElementById('contract-settlement').style.display = type === 'contract' ? 'block' : 'none';
+      document.getElementById('expense-settlement').style.display = type === 'expense' ? 'block' : 'none';
+    }
+
+    // 合同结算
+    function loadContractSettlements() {
+      const settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+
+      // 计算统计数据：自开累已结算金额大于0的条数 + 未入账成本大于0的条数
+      const paidCount = settlements.filter(s => (parseFloat(s.paidAmount) || 0) > 0).length;
+      const ungeneratedCount = settlements.filter(s => (parseFloat(s.ungeneratedCost) || 0) > 0).length;
+      const settlementCount = paidCount + ungeneratedCount;
+      
+      const totalSettled = settlements.reduce((sum, s) => sum + (parseFloat(s.paidAmount) || 0), 0);
+      const totalUngenerated = settlements.reduce((sum, s) => sum + (parseFloat(s.ungeneratedCost) || 0), 0);
+      
+      document.getElementById('contract-settlement-count').textContent = settlementCount;
+      document.getElementById('contract-total-settled').textContent = formatCurrency(totalSettled);
+      document.getElementById('contract-total-ungenerated').textContent = formatCurrency(totalUngenerated);
+
+      const tbody = document.getElementById('contract-settlement-table');
+      const emptyState = document.getElementById('contract-settlement-empty');
+
+      if (settlements.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = settlements.map((settlement, index) => {
+        const contract = contracts.find(c => c.id === settlement.contractId);
+        const totalAmount = (contract?.originalAmount || 0) + (contract?.supplementAmount || 0);
+        const currentCost = (parseFloat(settlement.paidAmount) || 0) + (parseFloat(settlement.ungeneratedCost) || 0);
+        const completionRatio = totalAmount > 0 ? (currentCost / totalAmount) * 100 : 0;
+        // 实付金额（包含预付款）= paymentAmount
+        const actualPaidAmount = settlement.isPaid ? (parseFloat(settlement.paymentAmount) || 0) : 0;
+        
+        return `
+          <tr>
+            <td>${index + 1}</td>
+            <td><span class="text-ellipsis" title="${contract?.code || '-'}">${contract?.code || '-'}</span></td>
+            <td>${contract?.subcontractorName || '-'}</td>
+            <td>${formatCurrency(settlement.paidAmount)}</td>
+            <td style="display:none;">${formatCurrency(settlement.ungeneratedCost)}</td>
+            <td>${formatCurrency(currentCost)}</td>
+            <td>${formatCurrency(actualPaidAmount)}</td>
+            <td>${completionRatio.toFixed(2)}%</td>
+            <td>${settlement.isPaid ? '<span class="status-tag completed">已支付</span>' : '<span class="status-tag pending">待支付</span>'}</td>
+            <td class="table-actions">
+              <button class="btn btn-info btn-sm" onclick="viewContractSettlement('${settlement.id}')">查看</button>
+              <button class="btn btn-secondary btn-sm" onclick="openPaymentModal('${settlement.id}', 'contract')">支付</button>
+              <button class="btn btn-warning btn-sm" onclick="editContractSettlement('${settlement.id}')">编辑</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteContractSettlement('${settlement.id}')">删除</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function loadContractInfo() {
+      const contractId = document.getElementById('settlement-contract-select').value;
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      const contract = contracts.find(c => c.id === contractId);
+
+      if (!contract) {
+        document.getElementById('linked-contract-info').style.display = 'none';
+        document.getElementById('calculated-info').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('linked-contract-info').style.display = 'block';
+      document.getElementById('info-expense-name').textContent = contract.expenseName || '-';
+      document.getElementById('info-subcontractor-name').textContent = contract.subcontractorName || '-';
+      document.getElementById('info-contract-code').textContent = contract.code || '-';
+      document.getElementById('info-sign-date').textContent = formatDate(contract.signDate);
+      document.getElementById('info-retain-ratio').textContent = (contract.retainRatio || 0) + '%';
+      document.getElementById('info-tax-rate').textContent = (contract.taxRate || 0) + '%';
+      document.getElementById('info-original-amount').textContent = formatCurrency(contract.originalAmount);
+      document.getElementById('info-supplement-amount').textContent = formatCurrency(contract.supplementAmount);
+      document.getElementById('info-advance-amount').textContent = formatCurrency(contract.advanceAmount);
+
+      // 自动计算
+      const totalAmount = (contract.originalAmount || 0) + (contract.supplementAmount || 0);
+      const taxRate = (contract.taxRate || 0) / 100;
+      const finalTaxAmount = totalAmount;
+      const finalNoTaxAmount = taxRate > 0 ? totalAmount / (1 + taxRate) : totalAmount;
+      const taxAmount = finalNoTaxAmount * taxRate;
+
+      document.getElementById('calculated-info').style.display = 'block';
+      document.getElementById('calc-total-amount').textContent = formatCurrency(totalAmount);
+      document.getElementById('calc-final-tax-amount').textContent = formatCurrency(finalTaxAmount);
+      document.getElementById('calc-final-no-tax-amount').textContent = formatCurrency(finalNoTaxAmount);
+      document.getElementById('calc-tax-amount').textContent = formatCurrency(taxAmount);
+    }
+
+    function calculateSettlement() {
+      const contractId = document.getElementById('settlement-contract-select').value;
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      const contract = contracts.find(c => c.id === contractId);
+
+      if (!contract) return;
+
+      const paidAmount = parseFloat(document.getElementById('settlement-paid-amount').value) || 0;
+      const ungeneratedCost = parseFloat(document.getElementById('settlement-ungenerated-cost').value) || 0;
+      const taxRate = (contract.taxRate || 0) / 100;
+      const totalAmount = (contract.originalAmount || 0) + (contract.supplementAmount || 0);
+
+      const currentCost = paidAmount + ungeneratedCost;
+      const currentCostNoTax = taxRate > 0 ? currentCost / (1 + taxRate) : currentCost;
+      const completionRatio = totalAmount > 0 ? (currentCost / totalAmount) * 100 : 0;
+
+      document.getElementById('settlement-calculated-info').style.display = 'block';
+      document.getElementById('calc-current-cost').textContent = formatCurrency(currentCost);
+      document.getElementById('calc-current-cost-no-tax').textContent = formatCurrency(currentCostNoTax);
+      document.getElementById('calc-completion-ratio').textContent = completionRatio.toFixed(2) + '%';
+    }
+
+    function openContractSettlementModal(id = null) {
+      updateSelectOptions();
+      const modal = document.getElementById('contract-settlement-modal');
+      const title = document.getElementById('contract-settlement-modal-title');
+
+      // 重置表单
+      document.getElementById('settlement-contract-select').value = '';
+      document.getElementById('linked-contract-info').style.display = 'none';
+      document.getElementById('calculated-info').style.display = 'none';
+      document.getElementById('settlement-calculated-info').style.display = 'none';
+      document.getElementById('settlement-paid-amount').value = 0;
+      document.getElementById('settlement-ungenerated-cost').value = 0;
+      document.getElementById('settlement-excluding-tax-amount').value = 0;
+      document.getElementById('settlement-remark').value = '';
+
+      if (id) {
+        title.textContent = '编辑合同结算单';
+        const settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+        const settlement = settlements.find(s => s.id === id);
+        if (settlement) {
+          document.getElementById('contract-settlement-id').value = settlement.id;
+          document.getElementById('settlement-contract-select').value = settlement.contractId;
+          loadContractInfo();
+          document.getElementById('settlement-paid-amount').value = settlement.paidAmount || 0;
+          document.getElementById('settlement-ungenerated-cost').value = settlement.ungeneratedCost || 0;
+          document.getElementById('settlement-excluding-tax-amount').value = settlement.excludingTaxAmount || 0;
+          document.getElementById('settlement-remark').value = settlement.remark || '';
+          calculateSettlement();
+        }
+      } else {
+        title.textContent = '新增合同结算单';
+        document.getElementById('contract-settlement-id').value = '';
+      }
+
+      openModal('contract-settlement-modal');
+    }
+
+    function editContractSettlement(id) {
+      openContractSettlementModal(id);
+    }
+
+    function saveContractSettlement() {
+      const contractId = document.getElementById('settlement-contract-select').value;
+      const id = document.getElementById('contract-settlement-id').value;
+
+      if (!contractId) {
+        showToast('请选择合同', 'error');
+        return;
+      }
+
+      const settlementData = {
+        contractId: contractId,
+        paidAmount: parseFloat(document.getElementById('settlement-paid-amount').value) || 0,
+        ungeneratedCost: parseFloat(document.getElementById('settlement-ungenerated-cost').value) || 0,
+        excludingTaxAmount: parseFloat(document.getElementById('settlement-excluding-tax-amount').value) || 0,
+        remark: document.getElementById('settlement-remark').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      let settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+
+      if (id) {
+        const index = settlements.findIndex(s => s.id === id);
+        if (index !== -1) {
+          settlements[index] = { ...settlements[index], ...settlementData };
+        }
+      } else {
+        settlements.push({
+          id: generateId(),
+          ...settlementData,
+          isPaid: false,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      saveData(STORAGE_KEYS.CONTRACT_SETTLEMENTS, settlements);
+      closeModal('contract-settlement-modal');
+      loadContractSettlements();
+      updateStats();
+      showToast(id ? '结算单已更新' : '结算单已添加');
+    }
+
+    function deleteContractSettlement(id) {
+      if (!confirm('确定要删除此结算单吗？')) return;
+
+      let settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+      settlements = settlements.filter(s => s.id !== id);
+      saveData(STORAGE_KEYS.CONTRACT_SETTLEMENTS, settlements);
+
+      loadContractSettlements();
+      updateStats();
+      showToast('结算单已删除');
+    }
+
+    // 费用项结算
+    function loadExpenseSettlements() {
+      const settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+      const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+
+      // 计算统计数据：自开累已结算金额大于0的条数 + 未入账成本大于0的条数
+      const paidCount = settlements.filter(s => (parseFloat(s.paidAmount) || 0) > 0).length;
+      const ungeneratedCount = settlements.filter(s => (parseFloat(s.ungeneratedCost) || 0) > 0).length;
+      const settlementCount = paidCount + ungeneratedCount;
+      
+      const totalSettled = settlements.reduce((sum, s) => sum + (parseFloat(s.paidAmount) || 0), 0);
+      const totalUngenerated = settlements.reduce((sum, s) => sum + (parseFloat(s.ungeneratedCost) || 0), 0);
+      
+      document.getElementById('expense-settlement-count').textContent = settlementCount;
+      document.getElementById('expense-total-settled').textContent = formatCurrency(totalSettled);
+      document.getElementById('expense-total-ungenerated').textContent = formatCurrency(totalUngenerated);
+
+      const tbody = document.getElementById('expense-settlement-table');
+      const emptyState = document.getElementById('expense-settlement-empty');
+
+      if (settlements.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = settlements.map((settlement, index) => {
+        // 兼容：优先用 id 匹配，找不到则用 expenseId 本身（可能是旧数据存的 name）
+        const expense = expenses.find(e => e.id === settlement.expenseId) 
+                     || expenses.find(e => e.name === settlement.expenseId)
+                     || { name: settlement.expenseId };
+        const currentCost = (parseFloat(settlement.paidAmount) || 0) + (parseFloat(settlement.ungeneratedCost) || 0);
+        // 实付金额（包含预付款）= paymentAmount
+        const actualPaidAmount = settlement.isPaid ? (parseFloat(settlement.paymentAmount) || 0) : 0;
+        
+        return `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${expense?.name || '-'}</td>
+            <td>${formatCurrency(settlement.paidAmount)}</td>
+            <td style="display:none;">${formatCurrency(settlement.ungeneratedCost)}</td>
+            <td>${formatCurrency(currentCost)}</td>
+            <td>${formatCurrency(actualPaidAmount)}</td>
+            <td>${settlement.isPaid ? '<span class="status-tag completed">已支付</span>' : '<span class="status-tag pending">待支付</span>'}</td>
+            <td class="table-actions">
+              <button class="btn btn-info btn-sm" style="min-width:40px;" onclick="viewExpenseSettlement('${settlement.id}')">查看</button>
+              <button class="btn btn-secondary btn-sm" style="min-width:40px;" onclick="openPaymentModal('${settlement.id}', 'expense')">支付</button>
+              <button class="btn btn-warning btn-sm" style="min-width:40px;" onclick="editExpenseSettlement('${settlement.id}')">编辑</button>
+              <button class="btn btn-danger btn-sm" style="min-width:40px;" onclick="deleteExpenseSettlement('${settlement.id}')">删除</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openExpenseSettlementModal(id = null) {
+      updateSelectOptions();
+      const modal = document.getElementById('expense-settlement-modal');
+      const title = document.getElementById('expense-settlement-modal-title');
+
+      document.getElementById('expense-settlement-id').value = '';
+      document.getElementById('settlement-expense-select').value = '';
+      document.getElementById('expense-settlement-paid-amount').value = 0;
+      document.getElementById('expense-settlement-ungenerated-cost').value = 0;
+      document.getElementById('expense-settlement-calculated-info').style.display = 'none';
+      document.getElementById('expense-settlement-remark').value = '';
+
+      if (id) {
+        title.textContent = '编辑费用项结算单';
+        const settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+        const settlement = settlements.find(s => s.id === id);
+        const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+        if (settlement) {
+          document.getElementById('expense-settlement-id').value = settlement.id;
+          // 兼容：优先用 id 匹配，找不到则用 expenseId（可能是 name）查找对应的 expense
+          const matchedExpense = expenses.find(e => e.id === settlement.expenseId) || expenses.find(e => e.name === settlement.expenseId);
+          document.getElementById('settlement-expense-select').value = matchedExpense ? matchedExpense.id : settlement.expenseId;
+          document.getElementById('expense-settlement-paid-amount').value = settlement.paidAmount || 0;
+          document.getElementById('expense-settlement-ungenerated-cost').value = settlement.ungeneratedCost || 0;
+          document.getElementById('expense-settlement-remark').value = settlement.remark || '';
+          calculateExpenseSettlement();
+        }
+      } else {
+        title.textContent = '新增费用项结算单';
+      }
+
+      openModal('expense-settlement-modal');
+    }
+
+    // 计算费用项结算
+    function calculateExpenseSettlement() {
+      const paidAmount = parseFloat(document.getElementById('expense-settlement-paid-amount').value) || 0;
+      const ungeneratedCost = parseFloat(document.getElementById('expense-settlement-ungenerated-cost').value) || 0;
+      const currentCost = paidAmount + ungeneratedCost;
+
+      document.getElementById('expense-settlement-calculated-info').style.display = 'block';
+      document.getElementById('expense-calc-current-cost').textContent = formatCurrency(currentCost);
+    }
+
+    function editExpenseSettlement(id) {
+      openExpenseSettlementModal(id);
+    }
+
+    function saveExpenseSettlement() {
+      const expenseId = document.getElementById('settlement-expense-select').value;
+      const id = document.getElementById('expense-settlement-id').value;
+
+      if (!expenseId) {
+        showToast('请选择费用名称', 'error');
+        return;
+      }
+
+      const settlementData = {
+        expenseId: expenseId,
+        paidAmount: parseFloat(document.getElementById('expense-settlement-paid-amount').value) || 0,
+        ungeneratedCost: parseFloat(document.getElementById('expense-settlement-ungenerated-cost').value) || 0,
+        remark: document.getElementById('expense-settlement-remark').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      let settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+
+      if (id) {
+        const index = settlements.findIndex(s => s.id === id);
+        if (index !== -1) {
+          settlements[index] = { ...settlements[index], ...settlementData };
+        }
+      } else {
+        settlements.push({
+          id: generateId(),
+          ...settlementData,
+          isPaid: false,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      saveData(STORAGE_KEYS.EXPENSE_SETTLEMENTS, settlements);
+      closeModal('expense-settlement-modal');
+      loadExpenseSettlements();
+      updateStats();
+      showToast(id ? '结算单已更新' : '结算单已添加');
+    }
+
+    function deleteExpenseSettlement(id) {
+      if (!confirm('确定要删除此结算单吗？')) return;
+
+      let settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+      settlements = settlements.filter(s => s.id !== id);
+      saveData(STORAGE_KEYS.EXPENSE_SETTLEMENTS, settlements);
+
+      loadExpenseSettlements();
+      updateStats();
+      showToast('结算单已删除');
+    }
+
+    // 支付功能
+    function openPaymentModal(settlementId, type) {
+      document.getElementById('payment-settlement-id').value = settlementId;
+      document.getElementById('payment-settlement-type').value = type;
+
+      let payableAmount = 0;
+      let savedPaymentAmount = 0;
+
+      if (type === 'contract') {
+        const settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+        const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+        const settlement = settlements.find(s => s.id === settlementId);
+        const contract = contracts.find(c => c.id === settlement?.contractId);
+
+        if (contract && settlement) {
+          // 当前已发生成本 = 已结算金额 + 未入账成本
+          const currentCost = (parseFloat(settlement.paidAmount) || 0) + (parseFloat(settlement.ungeneratedCost) || 0);
+          const advanceAmount = contract.advanceAmount || 0;
+          const ratio = contract.executingRatio || 0;
+          // 按合同应付金额（包括预付款）= 预付款 + 当前已发生成本 × 执行中付款比例
+          payableAmount = advanceAmount + currentCost * (ratio / 100);
+          // 获取已保存的支付金额
+          savedPaymentAmount = settlement.isPaid ? (parseFloat(settlement.paymentAmount) || 0) : 0;
+        }
+      } else {
+        const settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+        const settlement = settlements.find(s => s.id === settlementId);
+        // 当前已发生成本 = 自开累已结算金额 + 未入账成本
+        const paidAmount = parseFloat(settlement?.paidAmount) || 0;
+        const ungeneratedCost = parseFloat(settlement?.ungeneratedCost) || 0;
+        payableAmount = paidAmount + ungeneratedCost;
+        // 获取已保存的支付金额
+        savedPaymentAmount = settlement?.isPaid ? (parseFloat(settlement.paymentAmount) || 0) : 0;
+      }
+
+      document.getElementById('payment-payable-amount').textContent = formatCurrency(payableAmount);
+      document.getElementById('payment-actual-amount').value = savedPaymentAmount;
+      document.getElementById('payment-actual-display').textContent = formatCurrency(savedPaymentAmount);
+      document.getElementById('payment-owed-amount').textContent = formatCurrency(payableAmount - savedPaymentAmount);
+
+      document.getElementById('payment-actual-amount').oninput = function() {
+        const actual = parseFloat(this.value) || 0;
+        const owed = payableAmount - actual;
+        document.getElementById('payment-actual-display').textContent = formatCurrency(actual);
+        document.getElementById('payment-owed-amount').textContent = formatCurrency(owed);
+      };
+
+      openModal('payment-modal');
+    }
+
+    function savePayment() {
+      const settlementId = document.getElementById('payment-settlement-id').value;
+      const type = document.getElementById('payment-settlement-type').value;
+
+      if (type === 'contract') {
+        let settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+        const index = settlements.findIndex(s => s.id === settlementId);
+        if (index !== -1) {
+          settlements[index].isPaid = true;
+          settlements[index].paymentAmount = parseFloat(document.getElementById('payment-actual-amount').value) || 0;
+          settlements[index].paidAt = new Date().toISOString();
+          saveData(STORAGE_KEYS.CONTRACT_SETTLEMENTS, settlements);
+          loadContractSettlements();
+        }
+      } else {
+        let settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+        const index = settlements.findIndex(s => s.id === settlementId);
+        if (index !== -1) {
+          settlements[index].isPaid = true;
+          settlements[index].paymentAmount = parseFloat(document.getElementById('payment-actual-amount').value) || 0;
+          settlements[index].paidAt = new Date().toISOString();
+          saveData(STORAGE_KEYS.EXPENSE_SETTLEMENTS, settlements);
+          loadExpenseSettlements();
+        }
+      }
+
+      closeModal('payment-modal');
+      updateStats();
+      showToast('支付信息已保存');
+    }
+
+    // 查看合同结算详情
+    function viewContractSettlement(id) {
+      const settlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      const settlement = settlements.find(s => s.id === id);
+      const contract = contracts.find(c => c.id === settlement?.contractId);
+
+      if (!settlement || !contract) {
+        showToast('未找到结算单信息', 'error');
+        return;
+      }
+
+      // 计算数据
+      const totalAmount = (contract.originalAmount || 0) + (contract.supplementAmount || 0);
+      const taxRate = (contract.taxRate || 0) / 100;
+      const finalTaxAmount = totalAmount;
+      const finalNoTaxAmount = taxRate > 0 ? totalAmount / (1 + taxRate) : totalAmount;
+      const taxAmount = finalNoTaxAmount * taxRate;
+      const paidAmount = parseFloat(settlement.paidAmount) || 0;
+      const ungeneratedCost = parseFloat(settlement.ungeneratedCost) || 0;
+      const currentCost = paidAmount + ungeneratedCost;
+      const currentCostNoTax = taxRate > 0 ? currentCost / (1 + taxRate) : currentCost;
+      const completionRatio = totalAmount > 0 ? (currentCost / totalAmount) * 100 : 0;
+      // 除税金额为用户输入值
+      const excludingTaxAmount = parseFloat(settlement.excludingTaxAmount) || 0;
+
+      // 按合同应付金额
+      const advanceAmount = contract.advanceAmount || 0;
+      const ratio = contract.executingRatio || 0;
+      const payableAmount = advanceAmount + currentCost * (ratio / 100);
+
+      const content = `
+        <div class="section-title" style="margin-top: 0;">合同信息</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">费用名称</span>
+            <span class="info-value">${contract.expenseName || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">分包商名称</span>
+            <span class="info-value">${contract.subcontractorName || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">合同编号</span>
+            <span class="info-value">${contract.code || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">合同签订时间</span>
+            <span class="info-value">${formatDate(contract.signDate)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">保留金比例</span>
+            <span class="info-value">${(contract.retainRatio || 0).toFixed(2)}%</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">执行中付款比例</span>
+            <span class="info-value">${(contract.executingRatio || 0).toFixed(2)}%</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">完工待结算付款比例</span>
+            <span class="info-value">${(contract.waitingRatio || 0).toFixed(2)}%</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">结算完成付款比例</span>
+            <span class="info-value">${(contract.completedRatio || 0).toFixed(2)}%</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">合同税率</span>
+            <span class="info-value">${(contract.taxRate || 0).toFixed(2)}%</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">原合同金额</span>
+            <span class="info-value">${formatCurrency(contract.originalAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">补充协议金额</span>
+            <span class="info-value">${formatCurrency(contract.supplementAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">预付款金额</span>
+            <span class="info-value">${formatCurrency(contract.advanceAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">合同状态</span>
+            <span class="status-tag ${getStatusClass(contract.status)}">${contract.status}</span>
+          </div>
+        </div>
+
+        <div class="section-title">合同金额计算</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">合计金额</span>
+            <span class="info-value">${formatCurrency(totalAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">预估最终结算含税金额</span>
+            <span class="info-value">${formatCurrency(finalTaxAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">预估最终结算不含税金额</span>
+            <span class="info-value">${formatCurrency(finalNoTaxAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">税金</span>
+            <span class="info-value">${formatCurrency(taxAmount)}</span>
+          </div>
+        </div>
+
+        <div class="section-title">结算信息</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">自开累已结算金额</span>
+            <span class="info-value">${formatCurrency(paidAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">未入账成本（本次结算金额）</span>
+            <span class="info-value">${formatCurrency(ungeneratedCost)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">当前已发生成本</span>
+            <span class="info-value">${formatCurrency(currentCost)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">当前已发生成本不含税金额</span>
+            <span class="info-value">${formatCurrency(currentCostNoTax)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">结算信息完成比例</span>
+            <span class="info-value">${completionRatio.toFixed(2)}%</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">除税金额</span>
+            <span class="info-value">${formatCurrency(excludingTaxAmount)}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>结算说明</label>
+          <div class="readonly-field" style="min-height: 60px;">${settlement.remark || '无'}</div>
+        </div>
+
+        <div class="section-title">支付信息</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">按合同应付金额（含预付款）</span>
+            <span class="info-value">${formatCurrency(payableAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">支付状态</span>
+            <span class="status-tag ${settlement.isPaid ? 'completed' : 'pending'}">${settlement.isPaid ? '已支付' : '待支付'}</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('contract-settlement-view-content').innerHTML = content;
+      openModal('contract-settlement-view-modal');
+    }
+
+    // 查看费用项结算详情
+    function viewExpenseSettlement(id) {
+      const settlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+      const expenses = loadData(STORAGE_KEYS.EXPENSES) || [];
+      const settlement = settlements.find(s => s.id === id);
+      const expense = expenses.find(e => e.id === settlement?.expenseId);
+
+      if (!settlement) {
+        showToast('未找到结算单信息', 'error');
+        return;
+      }
+
+      const paidAmount = parseFloat(settlement.paidAmount) || 0;
+      const ungeneratedCost = parseFloat(settlement.ungeneratedCost) || 0;
+      const currentCost = paidAmount + ungeneratedCost;
+
+      const content = `
+        <div class="section-title" style="margin-top: 0;">费用项信息</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">费用名称</span>
+            <span class="info-value">${expense?.name || '-'}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">创建时间</span>
+            <span class="info-value">${formatDate(settlement.createdAt)}</span>
+          </div>
+        </div>
+
+        <div class="section-title">结算信息</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">自开累已结算金额</span>
+            <span class="info-value">${formatCurrency(paidAmount)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">未入账成本（本次结算金额）</span>
+            <span class="info-value">${formatCurrency(ungeneratedCost)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">当前已发生成本</span>
+            <span class="info-value">${formatCurrency(currentCost)}</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>结算说明</label>
+          <div class="readonly-field" style="min-height: 60px;">${settlement.remark || '无'}</div>
+        </div>
+
+        <div class="section-title">支付信息</div>
+        <div class="info-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px;">
+          <div class="info-item">
+            <span class="info-label">应付金额</span>
+            <span class="info-value">${formatCurrency(currentCost)}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">支付状态</span>
+            <span class="status-tag ${settlement.isPaid ? 'completed' : 'pending'}">${settlement.isPaid ? '已支付' : '待支付'}</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('expense-settlement-view-content').innerHTML = content;
+      openModal('expense-settlement-view-modal');
+    }
+
+    // ==================== 初始化 ====================
+    function init() {
+      loadBenefits();
+      loadExpenses();
+      loadSubcontractors();
+      loadContracts();
+      loadContractSettlements();
+      loadExpenseSettlements();
+      loadIncome();
+      updateStats();
+      updateSelectOptions();
+      updateStatsOverview();
+    }
+
+    // ==================== 统计概述模块 ====================
+    function updateStatsOverview() {
+      // 1. 获取效益数据计算预计整体收益率和预计利润率（与效益分析模块保持一致）
+      const benefits = loadData(STORAGE_KEYS.BENEFITS) || {};
+      const totalRevenueTax = parseFloat(benefits.totalRevenueTax) || 0;
+      const totalRevenueNoTax = parseFloat(benefits.totalRevenueNoTax) || 0;
+      const totalCostNoTax = parseFloat(benefits.totalCostNoTax) || 0;
+      const totalCostTax = parseFloat(benefits.totalCostTax) || 0;
+      const managementFee = parseFloat(benefits.managementFee) || 0;
+      
+      // 预计整体收益率 = (预计整体收益 / 预计总收入（含税）) × 100%
+      // 预计整体收益 = 预计总收入（不含税）- 预计总成本（不含税）+ 管理费
+      const overallProfit = totalRevenueNoTax - totalCostNoTax + managementFee;
+      const overallRate = totalRevenueTax > 0 ? (overallProfit / totalRevenueTax) * 100 : 0;
+      
+      // 预计利润率 = (预计利润 / 预计总收入（含税）) × 100%
+      // 预计利润 = 预计总收入（不含税）- 预计总成本（不含税）
+      const profit = totalRevenueNoTax - totalCostNoTax;
+      const marginRate = totalRevenueTax > 0 ? (profit / totalRevenueTax) * 100 : 0;
+      
+      document.getElementById('stats-overall-rate').textContent = overallRate.toFixed(2) + '%';
+      document.getElementById('stats-margin-rate').textContent = marginRate.toFixed(2) + '%';
+
+      // 2. 结算单数量 = 合同结算单(自开累已结算金额>0的条数 + 未入账成本>0的条数) + 费用项结算单(同上)
+      const contractSettlements = loadData(STORAGE_KEYS.CONTRACT_SETTLEMENTS) || [];
+      const expenseSettlements = loadData(STORAGE_KEYS.EXPENSE_SETTLEMENTS) || [];
+      
+      // 合同结算单数量
+      const contractPaidCount = contractSettlements.filter(s => (parseFloat(s.paidAmount) || 0) > 0).length;
+      const contractUngeneratedCount = contractSettlements.filter(s => (parseFloat(s.ungeneratedCost) || 0) > 0).length;
+      const contractSettlementCount = contractPaidCount + contractUngeneratedCount;
+      
+      // 费用项结算单数量
+      const expensePaidCount = expenseSettlements.filter(s => (parseFloat(s.paidAmount) || 0) > 0).length;
+      const expenseUngeneratedCount = expenseSettlements.filter(s => (parseFloat(s.ungeneratedCost) || 0) > 0).length;
+      const expenseSettlementCount = expensePaidCount + expenseUngeneratedCount;
+      
+      const settlementCount = contractSettlementCount + expenseSettlementCount;
+      document.getElementById('stats-settlement-count').textContent = settlementCount;
+
+      // 3. 预估最终结算含税金额 = 效益分析中的预计总成本（含税）
+      document.getElementById('stats-final-tax-amount').textContent = formatCurrency(totalCostTax);
+
+      // 4. 当前已发生成本 = 合同结算的当前已发生成本累计之和 + 费用项结算的当前已发生成本累计之和
+      // 当前已发生成本 = 已结算金额 + 未入账成本
+      let contractCurrentCost = 0;
+      contractSettlements.forEach(settlement => {
+        const paidAmount = parseFloat(settlement.paidAmount) || 0;
+        const ungeneratedCost = parseFloat(settlement.ungeneratedCost) || 0;
+        contractCurrentCost += paidAmount + ungeneratedCost;
+      });
+      
+      let expenseCurrentCost = 0;
+      expenseSettlements.forEach(settlement => {
+        const paidAmount = parseFloat(settlement.paidAmount) || 0;
+        const ungeneratedCost = parseFloat(settlement.ungeneratedCost) || 0;
+        expenseCurrentCost += paidAmount + ungeneratedCost;
+      });
+      
+      const totalCurrentCost = contractCurrentCost + expenseCurrentCost;
+      
+      document.getElementById('stats-current-cost').textContent = (totalCurrentCost / 10000).toFixed(2);
+
+      // 5. 实付金额 = 合同结算的实付金额累计之和 + 费用项结算的实付金额累计之和
+      // 只统计已支付的结算单的 paymentAmount
+      let contractPaidAmount = 0;
+      contractSettlements.forEach(settlement => {
+        if (settlement.isPaid) {
+          contractPaidAmount += parseFloat(settlement.paymentAmount) || 0;
+        }
+      });
+      
+      let expensePaidAmount = 0;
+      expenseSettlements.forEach(settlement => {
+        if (settlement.isPaid) {
+          expensePaidAmount += parseFloat(settlement.paymentAmount) || 0;
+        }
+      });
+      
+      const totalPaidAmount = contractPaidAmount + expensePaidAmount;
+      
+      document.getElementById('stats-paid-amount').textContent = (totalPaidAmount / 10000).toFixed(2);
+
+      // 6. 欠款金额 = 合同结算的欠款金额累计之和 + 费用项结算的欠款金额累计之和
+      // 欠款金额 = 应付金额 - 实付金额
+      let contractOwedAmount = 0;
+      const contracts = loadData(STORAGE_KEYS.CONTRACTS) || [];
+      contractSettlements.forEach(settlement => {
+        const contract = contracts.find(c => c.id === settlement.contractId);
+        const currentCost = (parseFloat(settlement.paidAmount) || 0) + (parseFloat(settlement.ungeneratedCost) || 0);
+        const advanceAmount = contract?.advanceAmount || 0;
+        const ratio = contract?.executingRatio || 0;
+        // 应付金额 = 预付款 + 当前已发生成本 × 执行中付款比例
+        const payableAmount = advanceAmount + currentCost * (ratio / 100);
+        // 实付金额
+        const paidAmount = settlement.isPaid ? (parseFloat(settlement.paymentAmount) || 0) : 0;
+        contractOwedAmount += payableAmount - paidAmount;
+      });
+      
+      let expenseOwedAmount = 0;
+      expenseSettlements.forEach(settlement => {
+        const currentCost = (parseFloat(settlement.paidAmount) || 0) + (parseFloat(settlement.ungeneratedCost) || 0);
+        // 应付金额 = 当前已发生成本
+        const payableAmount = currentCost;
+        // 实付金额
+        const paidAmount = settlement.isPaid ? (parseFloat(settlement.paymentAmount) || 0) : 0;
+        expenseOwedAmount += payableAmount - paidAmount;
+      });
+      
+      const totalOwedAmount = contractOwedAmount + expenseOwedAmount;
+      document.getElementById('stats-owed-amount').textContent = (totalOwedAmount / 10000).toFixed(2);
+
+      // 7. 项目总收入 = 收入管理中的累计合同约定实付金额
+      const incomeList = loadData(STORAGE_KEYS.INCOME) || [];
+      const totalIncome = incomeList.reduce((sum, item) => sum + (parseFloat(item.actualPayable) || 0), 0);
+      document.getElementById('stats-total-income').textContent = formatCurrency(totalIncome);
+    }
+
+    // ==================== 提交数据模块 ====================
+    // 可提交的字段定义
+    const SUBMITTABLE_FIELDS = [
+      { id: 'stats-overall-rate', label: '预计整体收益率', fieldName: '预计整体收益率' },
+      { id: 'stats-margin-rate', label: '预计利润率', fieldName: '预计利润率' },
+      { id: 'stats-settlement-count', label: '结算单数量', fieldName: '结算单数量' },
+      { id: 'stats-final-tax-amount', label: '预估最终结算含税金额', fieldName: '预估最终结算含税金额' },
+      { id: 'stats-current-cost', label: '当前已发生成本', fieldName: '当前已发生成本' },
+      { id: 'stats-paid-amount', label: '实付金额（累计）', fieldName: '实付金额（累计）' },
+      { id: 'stats-owed-amount', label: '欠款金额', fieldName: '欠款金额' },
+      { id: 'stats-total-income', label: '项目总收入', fieldName: '项目总收入' }
+    ];
+
+    function showSubmitDataModal() {
+      // 设置当前时间
+      const now = new Date();
+      const timeStr = now.toLocaleString('zh-CN');
+      document.getElementById('submit-current-time').textContent = timeStr;
+
+      // 清空表单
+      document.getElementById('submit-api-url').value = '';
+      document.getElementById('submit-task-id').value = '';
+      document.getElementById('submit-username').value = '';
+
+      // 生成字段选择列表
+      const container = document.getElementById('field-select-container');
+      container.innerHTML = SUBMITTABLE_FIELDS.map(field => `
+        <label class="field-checkbox-item">
+          <input type="checkbox" value="${field.id}" onchange="updateSelectedFieldsPreview()">
+          <span class="field-label">${field.label}</span>
+          <span class="field-value" id="preview-${field.id}">-</span>
+        </label>
+      `).join('');
+
+      // 更新字段预览值
+      updateFieldPreviewValues();
+      
+      // 清空已选预览
+      document.getElementById('selected-fields-preview').innerHTML = '<div class="empty-hint">请勾选要提交的字段</div>';
+
+      openModal('submit-data-modal');
+    }
+
+    function updateFieldPreviewValues() {
+      // 更新所有字段的预览值
+      SUBMITTABLE_FIELDS.forEach(field => {
+        const el = document.getElementById(`preview-${field.id}`);
+        if (el) {
+          const sourceEl = document.getElementById(field.id);
+          el.textContent = sourceEl ? sourceEl.textContent : '-';
+        }
+      });
+    }
+
+    function updateSelectedFieldsPreview() {
+      const container = document.getElementById('field-select-container');
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+      
+      if (checkboxes.length === 0) {
+        document.getElementById('selected-fields-preview').innerHTML = '<div class="empty-hint">请勾选要提交的字段</div>';
+        return;
+      }
+
+      const selectedFields = [];
+      checkboxes.forEach(checkbox => {
+        const field = SUBMITTABLE_FIELDS.find(f => f.id === checkbox.value);
+        if (field) {
+          const sourceEl = document.getElementById(field.id);
+          const value = sourceEl ? sourceEl.textContent : '-';
+          selectedFields.push({
+            fieldName: field.fieldName,
+            value: value.replace(/¥|,/g, '')
+          });
+        }
+      });
+
+      const previewHtml = selectedFields.map(f => `
+        <div class="preview-item">
+          <span class="preview-label">${f.fieldName}</span>
+          <span class="preview-value">${f.value}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('selected-fields-preview').innerHTML = previewHtml;
+    }
+
+    async function submitData() {
+      const username = document.getElementById('submit-username').value.trim();
+      const apiUrl = document.getElementById('submit-api-url').value.trim();
+      const taskId = document.getElementById('submit-task-id').value.trim();
+
+      // 验证必填项
+      if (!username) {
+        showToast('请输入用户名', 'error');
+        return;
+      }
+      if (!apiUrl) {
+        showToast('请输入接口地址', 'error');
+        return;
+      }
+      if (!taskId) {
+        showToast('请输入任务ID', 'error');
+        return;
+      }
+
+      // 获取已选字段
+      const container = document.getElementById('field-select-container');
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+      
+      if (checkboxes.length === 0) {
+        showToast('请至少选择一个字段', 'error');
+        return;
+      }
+
+      const fields = [];
+      checkboxes.forEach(checkbox => {
+        const field = SUBMITTABLE_FIELDS.find(f => f.id === checkbox.value);
+        if (field) {
+          const sourceEl = document.getElementById(field.id);
+          const value = sourceEl ? sourceEl.textContent : '-';
+          fields.push({
+            fieldName: field.fieldName,
+            value: value.trim()
+          });
+        }
+      });
+
+      // 准备提交数据
+      const submitData = {
+        taskId: taskId,
+        username: username,
+        fields: fields
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(submitData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showToast('数据提交成功！', 'success');
+          closeModal('submit-data-modal');
+        } else {
+          showToast('数据提交失败：' + (result.message || '未知错误'), 'error');
+        }
+      } catch (error) {
+        showToast('提交失败：' + error.message, 'error');
+      }
+    }
+
+    // ==================== 收入管理模块 ====================
+    function loadIncome() {
+      const incomeList = loadData(STORAGE_KEYS.INCOME) || [];
+      const tbody = document.getElementById('income-table-body');
+      const emptyState = document.getElementById('income-empty');
+      const searchValue = (document.getElementById('income-search')?.value || '').toLowerCase();
+
+      // 过滤数据
+      let filteredIncome = incomeList;
+      if (searchValue) {
+        filteredIncome = incomeList.filter(item => 
+          (item.productionCycle || '').toLowerCase().includes(searchValue) ||
+          (item.fileNumber || '').toLowerCase().includes(searchValue) ||
+          (item.remarks || '').toLowerCase().includes(searchValue)
+        );
+      }
+
+      // 更新累计金额统计
+      const totalAmount = incomeList.reduce((sum, item) => sum + (parseFloat(item.actualPayable) || 0), 0);
+      document.getElementById('income-total-amount').textContent = formatCurrency(totalAmount);
+
+      if (filteredIncome.length === 0) {
+        tbody.innerHTML = '';
+        emptyState.style.display = 'flex';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      tbody.innerHTML = filteredIncome.map((item, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${item.productionCycle || '-'}</td>
+          <td>${item.fileNumber || '-'}</td>
+          <td>${formatCurrency(item.actualOutput)}</td>
+          <td>${formatCurrency(item.partyConfirmed)}</td>
+          <td>${formatCurrency(item.contractPayable)}</td>
+          <td>${formatCurrency(item.deduction)}</td>
+          <td>${formatCurrency(item.actualPayable)}</td>
+          <td>${item.remarks || '-'}</td>
+          <td class="table-actions">
+            <button class="btn btn-warning btn-sm" onclick="editIncome('${item.id}')">编辑</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteIncome('${item.id}')">删除</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterIncome() {
+      loadIncome();
+    }
+
+    function showIncomeModal(id = null) {
+      document.getElementById('income-modal-title').textContent = id ? '编辑收入' : '新增收入';
+      document.getElementById('income-id').value = id || '';
+      document.getElementById('income-production-cycle').value = '';
+      document.getElementById('income-file-number').value = '';
+      document.getElementById('income-actual-output').value = '';
+      document.getElementById('income-party-confirmed').value = '';
+      document.getElementById('income-contract-payable').value = '';
+      document.getElementById('income-deduction').value = '0';
+      document.getElementById('income-actual-payable').value = '';
+      document.getElementById('income-remarks').value = '';
+
+      if (id) {
+        const incomeList = loadData(STORAGE_KEYS.INCOME) || [];
+        const income = incomeList.find(item => item.id === id);
+        if (income) {
+          document.getElementById('income-production-cycle').value = income.productionCycle || '';
+          document.getElementById('income-file-number').value = income.fileNumber || '';
+          document.getElementById('income-actual-output').value = income.actualOutput || '';
+          document.getElementById('income-party-confirmed').value = income.partyConfirmed || '';
+          document.getElementById('income-contract-payable').value = income.contractPayable || '';
+          document.getElementById('income-deduction').value = income.deduction || '0';
+          document.getElementById('income-actual-payable').value = income.actualPayable || '';
+          document.getElementById('income-remarks').value = income.remarks || '';
+        }
+      }
+
+      openModal('income-modal');
+    }
+
+    function calculateIncomeAmounts() {
+      const contractPayable = parseFloat(document.getElementById('income-contract-payable').value) || 0;
+      const deduction = parseFloat(document.getElementById('income-deduction').value) || 0;
+      const actualPayable = contractPayable - deduction;
+      document.getElementById('income-actual-payable').value = actualPayable > 0 ? actualPayable.toFixed(2) : '0.00';
+    }
+
+    function editIncome(id) {
+      showIncomeModal(id);
+    }
+
+    function saveIncome() {
+      const productionCycle = document.getElementById('income-production-cycle').value;
+      const id = document.getElementById('income-id').value;
+
+      if (!productionCycle) {
+        showToast('请选择产值周期', 'error');
+        return;
+      }
+
+      const incomeData = {
+        productionCycle: productionCycle,
+        fileNumber: document.getElementById('income-file-number').value.trim(),
+        actualOutput: parseFloat(document.getElementById('income-actual-output').value) || 0,
+        partyConfirmed: parseFloat(document.getElementById('income-party-confirmed').value) || 0,
+        contractPayable: parseFloat(document.getElementById('income-contract-payable').value) || 0,
+        deduction: parseFloat(document.getElementById('income-deduction').value) || 0,
+        actualPayable: parseFloat(document.getElementById('income-actual-payable').value) || 0,
+        remarks: document.getElementById('income-remarks').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      let incomeList = loadData(STORAGE_KEYS.INCOME) || [];
+
+      if (id) {
+        const index = incomeList.findIndex(item => item.id === id);
+        if (index !== -1) {
+          incomeList[index] = { ...incomeList[index], ...incomeData };
+        }
+      } else {
+        incomeList.push({
+          id: generateId(),
+          ...incomeData,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      saveData(STORAGE_KEYS.INCOME, incomeList);
+      closeModal('income-modal');
+      loadIncome();
+      showToast(id ? '收入记录已更新' : '收入记录已添加');
+    }
+
+    function deleteIncome(id) {
+      if (!confirm('确定要删除此收入记录吗？')) return;
+
+      let incomeList = loadData(STORAGE_KEYS.INCOME) || [];
+      incomeList = incomeList.filter(item => item.id !== id);
+      saveData(STORAGE_KEYS.INCOME, incomeList);
+
+      loadIncome();
+      showToast('收入记录已删除');
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
