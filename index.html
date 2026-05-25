@@ -11,13 +11,13 @@
     <!-- 头部 -->
     <header class="app-header">
       <h1>项目全流程管理系统</h1>
-      <p>集成合同管理、费用项管理、分包商管理、结算管理与项目管理</p>
+      <p>集成合同管理、费用项管理、分包商管理、结算管理与项目26管理</p>
     </header>
 
     <!-- Tab导航 -->
     <nav class="tab-navigation">
       <button class="tab-btn" data-tab="stats">统计概述</button>
-      <button class="tab-btn active" data-tab="benefits">项目管理</button>
+      <button class="tab-btn active" data-tab="benefits">项目26管理</button>
       <button class="tab-btn" data-tab="expenses">费用项管理</button>
       <button class="tab-btn" data-tab="subcontractors">分包商管理</button>
       <button class="tab-btn" data-tab="contracts">合同信息</button>
@@ -168,14 +168,14 @@
       </div>
     </section>
 
-    <!-- 模块1：项目管理 -->
+    <!-- 模块1：项目26管理 -->
     <section id="benefits" class="module-container active">
       <div class="benefit-summary">
         <h3>
           <svg width="24" height="24" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
           </svg>
-          项目管理概览
+          项目26管理概览
         </h3>
         <div class="benefit-grid">
           <div class="benefit-item">
@@ -1246,7 +1246,7 @@
       });
     }
 
-    // ==================== 模块1：项目管理 ====================
+    // ==================== 模块1：项目26管理 ====================
     function calculateBenefits() {
       const totalRevenueTax = parseFloat(document.getElementById('total-revenue-tax').value) || 0;
       const totalRevenueNoTax = parseFloat(document.getElementById('total-revenue-no-tax').value) || 0;
@@ -1288,7 +1288,7 @@
         updatedAt: new Date().toISOString()
       };
       saveData(STORAGE_KEYS.BENEFITS, benefits);
-      showToast('项目管理数据已保存');
+      showToast('项目26管理数据已保存');
     }
 
     function loadBenefits() {
