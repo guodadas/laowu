@@ -126,7 +126,7 @@
 ## 数据存储
 使用localStorage存储，包含以下key：
 - `project_benefits` - 项目效益数据
-- `project_expenses` - 费用项列表
+- `project_expenses` - 费用项管理
 - `project_subcontractors` - 分包商列表
 - `project_contracts` - 合同列表
 - `project_contract_settlements` - 合同结算单列表
