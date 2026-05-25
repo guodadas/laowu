@@ -613,7 +613,7 @@ tr:hover {
 
 /* 项目管理专用样式 */
 .benefit-summary {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 24px;
   border-radius: var(--border-radius);
