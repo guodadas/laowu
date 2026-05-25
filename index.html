@@ -639,6 +639,12 @@
                 <!-- 动态生成 -->
               </tbody>
             </table>
+            <div class="empty-state" id="income-empty" style="display: none;">
+              <svg fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"/>
+              </svg>
+              <p>暂无收入记录</p>
+            </div>
           </div>
         </div>
       </div>
@@ -2734,6 +2740,7 @@
     function loadIncome() {
       const incomeList = loadData(STORAGE_KEYS.INCOME) || [];
       const tbody = document.getElementById('income-table-body');
+      const emptyState = document.getElementById('income-empty');
       const searchValue = (document.getElementById('income-search')?.value || '').toLowerCase();
 
       // 过滤数据
@@ -2752,8 +2759,11 @@
 
       if (filteredIncome.length === 0) {
         tbody.innerHTML = '';
+        emptyState.style.display = 'block';
         return;
       }
+
+      emptyState.style.display = 'none';
 
       tbody.innerHTML = filteredIncome.map((item, index) => `
         <tr>
